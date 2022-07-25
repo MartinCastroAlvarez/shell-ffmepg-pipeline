@@ -1,0 +1,14 @@
+#!/bin/bash
+# -------------------------------------------------------------
+# Purpose:
+# Generates a hash out of a given string
+#
+# Usage:
+# >>> echo.hash "lorem-ipsum.mp4"
+# ... bbea496bdf11141165bf231b68cfb30b
+# >>> echo "lorem-ipsum.mp4" | echo.hash
+# ... bbea496bdf11141165bf231b68cfb30b
+# -------------------------------------------------------------
+source args.parse $@
+source args.require "MESSAGE"
+echo "${MESSAGE}" | /usr/bin/md5sum | /bin/cut -f1 -d" "

@@ -1,0 +1,25 @@
+#!/bin/bash
+# -------------------------------------------------------------
+# Purpose:
+# Extracts the height of a video.
+#
+# Installation:
+# >>> source sudo yum -y install youtube -dl
+# >>> source sudo yum -y install ffmpeg ffmpeg-devel
+#
+# Usage:
+# >>> video.height a.mp4
+# -------------------------------------------------------------
+source args.parse $@
+source args.require.file "INPUT"
+ffmpeg \
+    -noautorotate \
+	-i "${INPUT}" 2>&1 \
+	| grep "Video:" \
+	| grep -Po '\d{3,5}x\d{3,5}' \
+	| cut -d'x' -f2
+if [ "$?" != "0" ]
+then
+    echo.error "Failed to process video!"
+    exit 3
+fi
